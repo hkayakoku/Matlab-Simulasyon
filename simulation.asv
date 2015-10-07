@@ -216,7 +216,7 @@ if getIsPopupClicked == false
             % a basýlacak deðerler.
             
             % Pozisyon Ayarlandý.
-            set(textObj,  'Position' , [mainPos(1) mainPos(2) 25 9]);
+            set(textObj,  'Position' , [mainPos(1) mainPos(2) 20 15]);
             
             % Basýlacak Sting Hazýrlanýyor.
 
@@ -230,9 +230,11 @@ if getIsPopupClicked == false
                 tmp = getRobotObj;
                 s = tmp(id);
                 
-
-                printedValue = sprintf('gravSlope: %s\ngravLength: %s\ngroupID: %s\nisLeader: %s\n' , num2str(s.gravSlope) ,num2str(s.gravLength) , num2str(s.groupID) ,num2str(s.isLeader) );
-
+%                  printedValue = strcat(printedValue ,'gravSlope: ', num2str(s.gravSlope), '\n')
+                printedValue = sprintf('gravSlope: %s\n' , num2str(s.gravSlope) );
+%                 printedValue = printedValue + sprintf('gravLength: %s\n' , num2str(s.gravLength) );
+%                 printedValue = printedValue + sprintf('groupID: %s\n' , num2str(s.groupID) );
+%                 printedValue = printedValue + sprintf('isLeader: %s\n' , num2str(s.isLeader) );
             end
             
             if strcmp(type , 'Cisim')
