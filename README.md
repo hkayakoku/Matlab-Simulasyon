@@ -23,7 +23,7 @@ görevlerini, geliştirilen algoritmalarla yerine getirmektedir.
 
 Robotlar simulasyona manual veya random olarak eklenebilir.
 
-Her bir robot üzerinde mesafe ölçeye yarayan lazer uzaklık sensörü vardır. Dolayısyla robotların bulunduğu dünya düşünüldüğünde her bir robotun elde edebildiği tek veri, kendisi dışındaki elmanlara olan uzaklığıdır.
+Her bir robot üzerinde mesafe ölçmeye yarayan lazer uzaklık sensörü vardır. Dolayısyla robotların bulunduğu dünya düşünüldüğünde her bir robotun elde edebildiği tek veri, kendisi dışındaki elmanlara olan uzaklığıdır.
 
 
 ## Algoritma Tasarımı
@@ -32,7 +32,7 @@ Robotların birbirinden habersiz olarak ve decenteralize şekilde gruplanmasınd
 
 Kütle çekimi, nesnelerin birbirlerine doğru çekme kuvveti uygulamasına denir. Bu çekme kuvveti; cisimlerin kütleleriyle doğru orantılı, merkezleri arasındaki uzaklığın karesiyle de ters orantılıdır.
 
-![Kütle Çekim](./images/NewtonsLawOfUniversalGravitation.svg)
+![Kütle Çekim](./images/NewtonsLawOfUniversalGravitation.png)
 
 simulasyonda her bir robot için ilk olarak bir kütle ataması yapılmıştır. bu kütle izafi bir değer olup sistemin tepkilerine göre güncellenmektedir. Bu konu ilerleyen aşamalarda anlatılacaktır.
 
@@ -59,13 +59,17 @@ Birbirlerine limit değer kadar yakınlaşan robotlar, gruplanmak için hazır h
 
 Gruplanan robotların grup olarak hareket etmesi ve hedef taraması yapması amaçlanmıştır. bu noktada gruba ait robotların birbirleriyle ve diğer robotlarla anlık olarak haberleşmesi ve konum bilgilerini anlık paylaşmaları gerekmektedir. Donanımsal sınırlar göz önünde buludurulduğunda bu iletişim yoğunluğu sıkıntılara yol açmaktadır.
 
-Bu sebeple robot grupları içerisinde bir hiyerarşi oluşturulmuştur. Her robot grubunun bir lideri vardır. Gruba ait diğer üye robotlar bu lider üzerinden haberleşirler. Lider robotlar ise diğer guruplara ait lider robotlar ile haberleşme yeteneğine sahiptir. Robotlar kolonilerinin bu yöntem ile daha verimli biçimde alan taraması yapması amaçlanmıştır.
+Bu sebeple robot grupları içerisinde bir hiyerarşi oluşturulmuştur. Her robot grubunun bir lideri vardır. Gruba ait diğer üye robotlar bu lider üzerinden haberleşirler. Lider robotlar ise diğer guruplara ait lider robotlar ile haberleşme yeteneğine sahiptir. Robot kolonilerinin bu yöntem ile daha verimli biçimde alan taraması yapması amaçlanmıştır.
 
 #####Gruplama ve Lider Atama Algoritması
 
 Yakınlaşma algoritması kullanarak birbirlerine yeterince yaklaşan robotlar arasında aşağıdaki algoritma kullanılarak bir lider seçilecek ve gruplama yapılacaktır.
 
-* Yeterince yaklaşan (limit çekim değerine ulaşan) robot, lazer taramasıyla elde ettiği veriler ile   
+
+* Yeterince yaklaşan (limit çekim değerine ulaşan) robot elindeki lazer verisi ile kendisine yakın olan robotları tespit eder.
+* Robot Kendisini orijin kabul ederek, sırasıyla diğer robotların koordinatlarını inceler.
+* Koordinatları incelenen robotların, orijin kabul edilen robota göre trigonometrik düzlemde hangi bölgeye ait olduğunu belirlenir.
+* Robot, araştırdığı diğer robotlar içerisinde *(grupsayısı - 1)* sayıda robotu aynı trigonometrik bölgede yakalayabilirse Kendisini lider ilan eder.
 
 ######Örnek Senaryo:
 
