@@ -10,6 +10,7 @@ Programa ait ana ekran aşağıdaki gibidir.
 ## Senaryo
 Robotlar; hedeflerin ve engellerin de bulunduğu bir ortamda rastgele dizilmişlerdir.
 Simulasyon;
+
 1. Robotların kendi iradesiyle (otonom) hareket etmeleri,
 
 2. Robotların hız, konum, sensör vs. bilgilerinin değerlendirildiği merkezi bir işlem birimi olmadan (decenteralize), kendi içersinde karar vermeleri,
@@ -31,17 +32,17 @@ Robotların birbirinden habersiz olarak ve decenteralize şekilde gruplanmasınd
 
 Kütle çekimi, nesnelerin birbirlerine doğru çekme kuvveti uygulamasına denir. Bu çekme kuvveti; cisimlerin kütleleriyle doğru orantılı, merkezleri arasındaki uzaklığın karesiyle de ters orantılıdır.
 
-![Kütle Çekim](https://tr.wikipedia.org/wiki/Dosya:NewtonsLawOfUniversalGravitation.svg)
+![Kütle Çekim](./images/NewtonsLawOfUniversalGravitation.svg)
 
 simulasyonda her bir robot için ilk olarak bir kütle ataması yapılmıştır. bu kütle izafi bir değer olup sistemin tepkilerine göre güncellenmektedir. Bu konu ilerleyen aşamalarda anlatılacaktır.
 
 Robotun üzerindeki donanımlar lazer ile sınırlı olduğunda her bir robot için elde edilebilecek en güvenilir bilgi, robotun diğer robotlara olan uzaklık bilgisidir. Bu uzaklık bilgisi kullanılarak aşağıdaki algoritma geliştirilmiştir:
 
-#####Gruplanma Algoritması
+#####Yakınlaşma Algoritması
 
 * Başlangıçta ortama rastgele yerleştirilmiş her bir robot, lazerden aldığı uzaklık verilerini kullanarak sırasıyla diğer roboların kendisine uyguladığı çekim kuvvetlerini hesaplar.
-* Bütün çekim kuvvetleri hesaplanan robot bileşke kuvvet ve yön doğrultusunda hareket etsin.
-* Kütle Çekim doğrultusunda hareket eden robot, belirli bir değere çıktığında hareketini sonlandırsın.
+* Bütün çekim kuvvetleri hesaplanan robot bileşke kuvvet ve yön doğrultusunda hareket eder.
+* Kütle Çekim doğrultusunda hareket eden robot, belirli bir değere çıktığında hareketini sonlandırır.
 
 ######Algoritmanın panelde gösterimi:
 
@@ -49,13 +50,25 @@ Robotun üzerindeki donanımlar lazer ile sınırlı olduğunda her bir robot i�
 *ilk durum*
 
 ![Bileşke](./images/02_bileske.png)
-*robotların lazer verisi kullanarak hesapladığı üzerine uygulanan kütle çekimlerin bileşeleri gösterilmiştir.*
+*robotların lazer verisi kullanarak hesapladığı tüm kütle çekimlerin bileşeleri gösterilmiştir.*
 
 ![Gruplanma](./images/03_gruplama.png)
 *Bileşke kuvvet yönünde hareket eden robotlar önceden belirlenmiş limit kütle çekim değerine ulaştığında durular*
 
+Birbirlerine limit değer kadar yakınlaşan robotlar, gruplanmak için hazır haldedir.
 
-## Algoritma
+Gruplanan robotların grup olarak hareket etmesi ve hedef taraması yapması amaçlanmıştır. bu noktada gruba ait robotların birbirleriyle ve diğer robotlarla anlık olarak haberleşmesi ve konum bilgilerini anlık paylaşmaları gerekmektedir. Donanımsal sınırlar göz önünde buludurulduğunda bu iletişim yoğunluğu sıkıntılara yol açmaktadır.
+
+Bu sebeple robot grupları içerisinde bir hiyerarşi oluşturulmuştur. Her robot grubunun bir lideri vardır. Gruba ait diğer üye robotlar bu lider üzerinden haberleşirler. Lider robotlar ise diğer guruplara ait lider robotlar ile haberleşme yeteneğine sahiptir. Robotlar kolonilerinin bu yöntem ile daha verimli biçimde alan taraması yapması amaçlanmıştır.
+
+#####Gruplama ve Lider Atama Algoritması
+
+Yakınlaşma algoritması kullanarak birbirlerine yeterince yaklaşan robotlar arasında aşağıdaki algoritma kullanılarak bir lider seçilecek ve gruplama yapılacaktır.
+
+* Yeterince yaklaşan (limit çekim değerine ulaşan) robot, lazer taramasıyla elde ettiği veriler ile   
+
+######Örnek Senaryo:
+
 
 
 ### Kütle Çekim Algoritması
