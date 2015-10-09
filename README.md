@@ -88,3 +88,16 @@ Bahsedilen algoritma şekildeki gereği;
   Bahsedilen lider ataması algoritması **decenteralize** özelliklere sahiptir. Çünkü robotlar limit çekim değerine ulaştıktan sonra bu algoritmayı çalıştırıp kendisinin lider olup olamayacağını, eğer lider olabilecek konumda değilse grup içerisinde kimin lider olacağını kestirebililir.
 
 Lider atama algoritması kullanılarak lidere ve üyelere sahip olan robot kolonileri için bir sonraki aşama, ortam taraması yaparak hedef aramadır. hedef aramanın verimli şekilde çalışabilmesi için robot kolonileri arasında ortam taraması konusunda bölgelere ayrılma söz konusu olmalıdır. Bu ayrılma kolonilerde liderler aracılığıyla iletişime geçerek olmalıdır. üye robotlar ise lider eşliğinde koloni içerisinde kalarak ortam taraması yapacaklardır. Üyelerden herhangi biri hedefi bulduğunda liderle iletişime geçip lideri hedef doğrultusunda yönlendirme yeteneğine sahiptir.
+
+##### Grup Olarak Hareket için Ağırlık Merkezi Algoritması
+
+Lider ataması yapılmış ve gruplanmış robotlar, hedef araması yaparken bu grup alanı içerisinde kalmalı ve alan taramasını bu şekilde yapabilmeliler. Bu sebeple her bir grubun sahip oldu bir ağırlık merkezi noktası ve bu noktanın sahip olduğu bir kütlesi vardır. lider robot alan taraması yaparken ağırlık merkezini değiştirmektedir. Grup üyesi diğer robotların gruptan ayrılmaması ve lideri takip edebilmesi için yapması gereken tek davranış grubun sahip olduğu bu ağırlık merkezi noktasını takip etmesi olacaktır.
+
+
+## Uygulama
+
+Robotlar gruplama , yaklaşma , hedefe yönelme gibi dahvranışların tamamında Newton Evrensel Kütle Çekim Kanunu'nu kullanmaktadır. Geliştirilen Algoritmalardaki farklılık (cisimden kaçma vs. gibi) robotların sahip oldukları çoklu kütle değerlerinden kaynaklanmaktadır.
+
+Her robot bireysel olarak, ortamda bulunan cisimlerden kaçmakla sorumludur. dolayısıyla cisimin robota uyguladığı kuvvet negatif yöndedir.
+
+Ortamda bulunan henüz gruplanmamış robotlar için diğer robotlar pozitif yönde çekim kuvveti uygularken, gruplanmış robotlar birbirine itme kuvveti uygulamaktadır.  
