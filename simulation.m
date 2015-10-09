@@ -41,15 +41,15 @@ axis([0,lx,0,ly]);
 
 % Robot Tablosu ayarlandi
 t = handles.uitable1;
-set(t , 'ColumnName' , {'RobotID' , 'X' , 'Y'});
+set(t , 'ColumnName' , {'Robot' , 'X' , 'Y'});
 
 % Cisim Tablosu ayarlandi
 t2 = handles.uitable2;
-set(t2 , 'ColumnName' , {'cisimID' , 'X' , 'Y'});
+set(t2 , 'ColumnName' , {'Obstacle' , 'X' , 'Y'});
 
 % Hedef Tablosu ayarlandi
 t3 = handles.uitable3;
-set(t3 , 'ColumnName' , {'hedefID' , 'X' , 'Y'});
+set(t3 , 'ColumnName' , {'Goal' , 'X' , 'Y'});
 
 % Grup Sayisi initial olarak 0 atandi
 setGroupCount(0);

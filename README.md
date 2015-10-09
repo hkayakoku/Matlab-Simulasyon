@@ -73,7 +73,14 @@ Yakınlaşma algoritması kullanarak birbirlerine yeterince yaklaşan robotlar a
 
 ######Örnek Senaryo:
 
+![Lider Atama](./images/04_lider_atama)
 
+Bahsedilen algoritma şekildeki gereği;
 
-### Kütle Çekim Algoritması
-Robotların belli bir merkezden idare edilmediği ve donanımsal olarak sadece etrafı tarama yeteneğine sahip bir sensörü olduğu düşünüldüğünde mevcut roborlar için  
+* ilk olarak 1 nolu robot kendisini orijin( 0 , 0 ) kabul ederek sırasıyla kütle çekim değeri limitin üzerinde olan diğer robotların koordinatlarına bakarak bölgelerini hesaplayacak:
+
+  * **1 Nolu Robot için; 2 ve 3 nolu robot I.Bölgede,**
+  * 2 Nolu Robot için; 1 nolu robot III.Bölgede, 3 Nolu Robot IV.Bölgede,
+  * 3 Nolu Robot için; 2 nolu robot II.Bölgede, 1 Nolu Robot III.Bölgede,
+
+  değerlere bakıldığında, diğer robotları aynı bölgede yakalayabilen tek robot 1 Nolu robot olduğundan 1 nolu robot grup lideri, diğer robotlar ise grup üyesi robotlar olarak atanacaktır.
