@@ -73,7 +73,7 @@ Yakınlaşma algoritması kullanarak birbirlerine yeterince yaklaşan robotlar a
 
 ######Örnek Senaryo:
 
-![Lider Atama](./images/04_lider_atama)
+![Lider Atama](./images/04_lider_atama.png)
 
 Bahsedilen algoritma şekildeki gereği;
 
