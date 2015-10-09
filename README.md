@@ -99,7 +99,7 @@ Lider ataması yapılmış ve gruplanmış robotlar, hedef araması yaparken bu 
 ![Hedefe Yönelme](./images/06_hedefe_yonelme.png)
 *Liderin hedefe yönelmesi ve üye robotların ağırlık merkezi takibi*
 
-![Hedefe Ulaşma](.images/07_hedefe_ulasma.png)
+![Hedefe Ulaşma](./images/07_hedefe_ulasma.png)
 *Liderin hedefe ulaşması ve üye robotların ağırlık merkezine ulaşmaları*
 
 ## Uygulama
