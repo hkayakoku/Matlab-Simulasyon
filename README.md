@@ -93,6 +93,14 @@ Lider atama algoritması kullanılarak lidere ve üyelere sahip olan robot kolon
 
 Lider ataması yapılmış ve gruplanmış robotlar, hedef araması yaparken bu grup alanı içerisinde kalmalı ve alan taramasını bu şekilde yapabilmeliler. Bu sebeple her bir grubun sahip oldu bir ağırlık merkezi noktası ve bu noktanın sahip olduğu bir kütlesi vardır. lider robot alan taraması yaparken ağırlık merkezini değiştirmektedir. Grup üyesi diğer robotların gruptan ayrılmaması ve lideri takip edebilmesi için yapması gereken tek davranış grubun sahip olduğu bu ağırlık merkezi noktasını takip etmesi olacaktır.
 
+![Ağırlık Merkezi](./images/05_agirlik_merkezi.png)
+*Koloni içinde ağırlık merkezi hesaplaması. Siyah nokta ağırlık merkezini göstermektedir.*
+
+![Hedefe Yönelme](./images/06_hedefe_yonelme.png)
+*Liderin hedefe yönelmesi ve üye robotların ağırlık merkezi takibi*
+
+![Hedefe Ulaşma](.images/07_hedefe_ulasma.png)
+*Liderin hedefe ulaşması ve üye robotların ağırlık merkezine ulaşmaları*
 
 ## Uygulama
 
