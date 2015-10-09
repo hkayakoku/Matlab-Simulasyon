@@ -84,3 +84,7 @@ Bahsedilen algoritma şekildeki gereği;
   * 3 Nolu Robot için; 2 nolu robot II.Bölgede, 1 Nolu Robot III.Bölgede,
 
   değerlere bakıldığında, diğer robotları aynı bölgede yakalayabilen tek robot 1 Nolu robot olduğundan 1 nolu robot grup lideri, diğer robotlar ise grup üyesi robotlar olarak atanacaktır.
+
+  Bahsedilen lider ataması algoritması **decenteralize** özelliklere sahiptir. Çünkü robotlar limit çekim değerine ulaştıktan sonra bu algoritmayı çalıştırıp kendisinin lider olup olamayacağını, eğer lider olabilecek konumda değilse grup içerisinde kimin lider olacağını kestirebililir.
+
+Lider atama algoritması kullanılarak lidere ve üyelere sahip olan robot kolonileri için bir sonraki aşama, ortam taraması yaparak hedef aramadır. hedef aramanın verimli şekilde çalışabilmesi için robot kolonileri arasında ortam taraması konusunda bölgelere ayrılma söz konusu olmalıdır. Bu ayrılma kolonilerde liderler aracılığıyla iletişime geçerek olmalıdır. üye robotlar ise lider eşliğinde koloni içerisinde kalarak ortam taraması yapacaklardır. Üyelerden herhangi biri hedefi bulduğunda liderle iletişime geçip lideri hedef doğrultusunda yönlendirme yeteneğine sahiptir.
