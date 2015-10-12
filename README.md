@@ -144,7 +144,9 @@ Her robot lazerin okuyabildiği alanda diğer robotlar için aynı hesabı yapac
 
 Limit değer boyunca birbirlerine yaklaşan robotlar, önceden ayarlanmış grup sayısı kadar robot kendisine yaklaşıncaya kadar beklerler. Grup sayısı kadar duran robot algılayan robotlar, gruplama algoritmasına geçerler.
 
-* Her bir robot ilk olarak kendisini orijin kabul eder. ve yakınındaki robotların koordinatlarını buna göre günceller.
+![Grup Ataması](./images/12_grupatamasi.png)
+
+* Her bir robot, ilk olarak kendisini orijin kabul eder. ve yakınındaki robotların koordinatlarını buna göre günceller.
 Şekilde 1'nolu robotun orijin olduğu durumda 2'nolu robotun koordinatı (**X2-X1** , **Y2-Y1**) olur.
 * Koordinatları güncellenen robotların bölgeleri belirlenir.
 * **(Grup Sayısı - 1)** adet robotu güncellenen koordinatlara göre aynı bölgede elde eden robot kendisini lider ilan ederken, bu özelliğe sahip olmayan diğer robotlar kendisi gruba üye ilan ederler.
