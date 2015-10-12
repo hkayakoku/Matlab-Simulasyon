@@ -106,6 +106,8 @@ Lider ataması yapılmış ve gruplanmış robotlar, hedef araması yaparken bu 
 
 Robotlar gruplama , yaklaşma , hedefe yönelme gibi dahvranışların tamamında Newton Evrensel Kütle Çekim Kanunu'nu kullanmaktadır. Geliştirilen Algoritmalardaki farklılık (cisimden kaçma vs. gibi) robotların sahip oldukları çoklu kütle değerlerinden kaynaklanmaktadır.
 
+Panelde kullanılan her eleman (Robot , Cisim , Hedef) için nesne oluşturulmuştur. Robotların anlık konumlarına göre nesnelerin sahip olduğu ağırlık değerleri değişmektedir.
+
 Her robot bireysel olarak, ortamda bulunan cisimlerden kaçmakla sorumludur. dolayısıyla cisimin robota uyguladığı kuvvet negatif yöndedir.
 
 Ortamda bulunan henüz gruplanmamış robotlar için diğer robotlar pozitif yönde çekim kuvveti uygularken, gruplanmış robotlar birbirine itme kuvveti uygulamaktadır.  
@@ -121,4 +123,17 @@ Ortamdaki tüm robotlar lazerden aldığı uzaklık verisini belirli periyotlarl
 
 Yukarıda [1] Nolu robotun lazerden aldığı veri alfa(a) ve [2] Nolu robota olan uzaklığı d olsun.
 
-[2] Nolu robotun koordinatları: ( *X1 + sin(a) * d* , *Y1 + cos(a) * d*) olur.   
+* [2] Nolu robotun koordinatları: ( **X1 + sin(a) * d** , **Y1 + cos(a) * d**) olur.
+* Kütle Çekim Kuvveti G * ( (M1 * M2) / d^2 ) dir.
+* [1] Nolu robotun sahip olduğu doğrultu, beta(b) ile gösterilir.
+
+[1] Nolu robot bulunduğu doğrultuyu lazerden aldığı verilere göre (b-a) derece sağa dönerek eşitleyecek ve [2] nolu robot doğrultunda hareketine devam edecektir.
+Her robot lazerin okuyabildiği alanda diğer robotlar için aynı hesabı yapacak ve bileşke kuvvet yönünde limit çekim kuvveti değeri oluşana kadar hareket edecektir. Limit değerin üzerine çıkan robot durur.
+
+* Algoritma bütün robotlar için çalıştırıldığında panelde birbirlerine limit değer kadar yaklaşmış; fakat henüz gruplanmamış robotlar yer almaktadır.  
+
+![Gruplanma](./images/09_gruplanma.png)
+
+![Bileşke](./images/10_bileske.png)
+
+![Grup](./images/11_grup.png)
