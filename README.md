@@ -135,5 +135,7 @@ Her robot lazerin okuyabildiği alanda diğer robotlar için aynı hesabı yapac
 ![Gruplanma](./images/09_gruplanma.png)
 
 ![Bileşke](./images/10_bileske.png)
+*Bütün robotların sahip olduğu bileşke kuvvetler*
 
 ![Grup](./images/11_grup.png)
+*Limit değer büyüklüğünde birbirine yakınlaşan robotlar dururlar ve şekildeki henüz gruplanmamış topluluğu oluşturular*
