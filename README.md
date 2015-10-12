@@ -41,7 +41,7 @@ Robotun üzerindeki donanımlar lazer ile sınırlı olduğunda her bir robot i�
 #####Yakınlaşma Algoritması
 
 * Başlangıçta ortama rastgele yerleştirilmiş her bir robot, lazerden aldığı uzaklık verilerini kullanarak sırasıyla diğer roboların kendisine uyguladığı çekim kuvvetlerini hesaplar.
-* Bütün çekim kuvvetleri hesaplanan robot bileşke kuvvet ve yön doğrultusunda hareket eder.
+* Bütün çekim kuvvetleri hesaplanan robot, bileşke kuvvet ve yön doğrultusunda hareket eder.
 * Kütle Çekim doğrultusunda hareket eden robot, belirli bir değere çıktığında hareketini sonlandırır.
 
 ######Algoritmanın panelde gösterimi:
@@ -109,3 +109,16 @@ Robotlar gruplama , yaklaşma , hedefe yönelme gibi dahvranışların tamamınd
 Her robot bireysel olarak, ortamda bulunan cisimlerden kaçmakla sorumludur. dolayısıyla cisimin robota uyguladığı kuvvet negatif yöndedir.
 
 Ortamda bulunan henüz gruplanmamış robotlar için diğer robotlar pozitif yönde çekim kuvveti uygularken, gruplanmış robotlar birbirine itme kuvveti uygulamaktadır.  
+
+#####Yakınlaşma Algoritması Uygulaması
+
+Ortamdaki tüm robotlar lazerden aldığı uzaklık verisini belirli periyotlarla değerlendirir ve o anki kütle çekim kuvvetini hesaplar. Robotlar, hesapladığı yön ve kuvvet doğrultusunda hareket ederler.
+Önceden belirlenmiş olan kuvvet büyüklüğüne ulaşana kadar hareketi devam eden robotlar bu değere ulaştıklarında dururlar.
+
+######Lazer Verisi Kullanarak Kütle Çekim Hesabı
+
+![Yakınlaşma](./images/08_yakinlama.png)
+
+Yukarıda [1] Nolu robotun lazerden aldığı veri alfa(a) ve [2] Nolu robota olan uzaklığı d olsun.
+
+[2] Nolu robotun koordinatları: ( *X1 + sin(a) * d* , *Y1 + cos(a) * d*) olur.   
