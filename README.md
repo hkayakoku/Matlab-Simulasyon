@@ -124,7 +124,7 @@ Ortamdaki tüm robotlar lazerden aldığı uzaklık verisini belirli periyotlarl
 Yukarıda [1] Nolu robotun lazerden aldığı veri alfa(a) ve [2] Nolu robota olan uzaklığı d olsun.
 
 * [2] Nolu robotun koordinatları: ( **X1 + sin(a) * d** , **Y1 + cos(a) * d**) olur.
-* Kütle Çekim Kuvveti G * ( (M1 * M2) / d^2 ) dir.
+* Kütle Çekim Kuvveti **G * ( (M1 * M2) / d^2 )** dir.
 * [1] Nolu robotun sahip olduğu doğrultu, beta(b) ile gösterilir.
 
 [1] Nolu robot bulunduğu doğrultuyu lazerden aldığı verilere göre (b-a) derece sağa dönerek eşitleyecek ve [2] nolu robot doğrultunda hareketine devam edecektir.
@@ -139,3 +139,14 @@ Her robot lazerin okuyabildiği alanda diğer robotlar için aynı hesabı yapac
 
 ![Grup](./images/11_grup.png)
 *Limit değer büyüklüğünde birbirine yakınlaşan robotlar dururlar ve şekildeki henüz gruplanmamış topluluğu oluşturular*
+
+#####Gruplama Algoritması Uygulaması
+
+Limit değer boyunca birbirlerine yaklaşan robotlar, önceden ayarlanmış grup sayısı kadar robot kendisine yaklaşıncaya kadar beklerler. Grup sayısı kadar duran robot algılayan robotlar, gruplama algoritmasına geçerler.
+
+* Her bir robot ilk olarak kendisini orijin kabul eder. ve yakınındaki robotların koordinatlarını buna göre günceller.
+Şekilde 1'nolu robotun orijin olduğu durumda 2'nolu robotun koordinatı (**X2-X1** , **Y2-Y1**) olur.
+* Koordinatları güncellenen robotların bölgeleri belirlenir.
+* **(Grup Sayısı - 1)** adet robotu güncellenen koordinatlara göre aynı bölgede elde eden robot kendisini lider ilan ederken, bu özelliğe sahip olmayan diğer robotlar kendisi gruba üye ilan ederler.
+
+**NOT:** Robotların bu algoritmayı kullanarak, toplulukta kimin üye, kimin lider olduğunu tahmin etmesi sistemin decenteralize işlemesine iyi bir örnektir.
