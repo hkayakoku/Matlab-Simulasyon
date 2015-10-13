@@ -147,8 +147,24 @@ Limit değer boyunca birbirlerine yaklaşan robotlar, önceden ayarlanmış grup
 ![Grup Ataması](./images/12_grupatamasi.png)
 
 * Her bir robot, ilk olarak kendisini orijin kabul eder. ve yakınındaki robotların koordinatlarını buna göre günceller.
-Şekilde 1'nolu robotun orijin olduğu durumda 2'nolu robotun koordinatı (**X2-X1** , **Y2-Y1**) olur.
+Şekilde 1'nolu robotun orijin olduğu durumda 2'nolu robotun koordinatı ( **X2-X1** , **Y2-Y1** ) olur.
 * Koordinatları güncellenen robotların bölgeleri belirlenir.
-* **(Grup Sayısı - 1)** adet robotu güncellenen koordinatlara göre aynı bölgede elde eden robot kendisini lider ilan ederken, bu özelliğe sahip olmayan diğer robotlar kendisi gruba üye ilan ederler.
+* **(Grup Sayısı - 1)** adet robotu güncellenen koordinatlara göre aynı bölgede elde eden robot kendisini lider ilan ederken, bu özelliğe sahip olmayan diğer robotlar kendisini gruba üye ilan ederler.
+* Her bir robot gruplanan diğer robotların tipini (üye, lider) ve gruplama esnasındaki ilk konumunu kaydeder ve grubun her hareketinde değişen koordinatları takrar günceller.
++ Oluşturulan grupta, lider robotun kütlesi üye robotun kütlesinde daha fazladır. Dolayısıyla robotlar, gruplama esnasında kütlelerini güncellerler.
 
 **NOT:** Robotların bu algoritmayı kullanarak, toplulukta kimin üye, kimin lider olduğunu tahmin etmesi sistemin decenteralize işlemesine iyi bir örnektir.
+
+
+#####Ağırlık Merkezi Algoritması Uygulaması
+
++ Gruplanan robotların grup halinde hedef arayabilmesi için geliştirilen algoritmadır.
+
+![Ağırlık Merkezi](./images/13_agirlikmerkezi.png)
+
++ Her bir robot decenteralize olarak gruba ait diğer robotların koordinatlarını ve kütlelerini bildiğinden bütün gruba ait ağırlık merkezini kendisi hesaplar.
++ Ağırlık merkezi noktasının da sahip olduğu bir kütle değeri vardır. dolayısıyla bu nokta üye robotlara bir çekim kuvveti uygular.
++ Lider robot, hedef arama esnasında ağırlık merkezi noktasını sürekli kendisine doğru güncellemektedir.
++ Ağırlık merkezi noktası değişen sistemin üye robotlara uyguladığı çekim kuvveti de değişeceğinden üye robotlar üzerinde bulunan limit çekim kuvveti değerine tekrar ulaşabilmek için ağırlık merkezi doğrultusunda hareket edeceklerdir.
+
+**NOT:** Sistemin decenteralize olabilmesi için her bir robot anlık olarak değişen koordinat değerine göre yeniden ağırlık merkezi hesaplayacak ve yeniden hareketine devam edeceklerdir.
