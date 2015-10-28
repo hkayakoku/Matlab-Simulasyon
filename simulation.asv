@@ -60,7 +60,7 @@ set(panel , 'WindowButtonDownFcn' , {@ClicktoAdd_callback,handles})
 function coordinate_callback (src,callbackdata)
 
 selRobot = getSelectedRobot;
-circle = selRobot.circleID;
+
     % Axe nesnesinde  position değerini al.
     % Position [left bottom width height]
     position = get(gca , 'Position');
@@ -90,30 +90,25 @@ circle = selRobot.circleID;
         set(findobj('Tag' , 'coordinate') , 'String' , res );
         
         roboID = getMeIdByCoordinate(X , Y);
-%         selID = selRobot.robotID 
+
         
 %         avail = isAvailOnPanel(X,Y);
-        if roboID ~= 0 && circle == 0 && roboID ~= selRobot.robotID 
-           
+        if roboID ~= 0 && getSelectedCircle == 0 && roboID ~= selRobot.robotID 
             tmp = getRobotObj;
             s = tmp(roboID);
             
-            selRobot.robotID = roboID;
-            selRobot.circleID = circles(s.x, s.y , pref.circleRadius ,'facecolor' , 'none','edgecolor',[1 0 0],'linewidth',4);
+            selRobot.circleID = circles(s.x, s.y , pref.circleRadius ,'facecolor' , 'none','edgecolor',[1 0 0],'linewidth',4)
+            selRobot.robotID
             
-            
-            setSelectedRobot(selRobot);
+            setSelectedCircle(selRobot);
             
         
         else
             
-            if circle ~= 0 && roboID ~= selRobot.robotID 
-            delete(circle);
-            selRobot.circleID = 0;
-            selRobot.robotID = 0;
-            setSelectedRobot(selRobot);
-            
-
+            if getSelectedCircle ~= 0
+                fprintf('siliyorum \n');
+            delete(getSelectedCircle);
+            setSelectedCircle(0);
             end
         end
         
@@ -237,6 +232,9 @@ for i=1:length(tmp)
     end
     
     if resX > 0 && resY > 0 && resX < pref.circleRadius && resY < pref.circleRadius
+%     resX
+%     resY
+        s.id
         roboID = s.id;
         break;
 

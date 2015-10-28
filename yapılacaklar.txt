@@ -1,2 +1,0 @@
-1 -) kütle çekim alanýna daire ekleme özelliði açýlýp kapatýlabilecek.
-2 -) Seçenekler paneli geliþtirilecek.
