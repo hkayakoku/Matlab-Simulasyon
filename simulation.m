@@ -46,11 +46,15 @@ panel = gcf;
 select = selectedObj;
 select.circleID = 0;
 select.robotID = 0;
+select.laserCircle = 0;
+select.linesObj = [];
 setSelectedRobot(select);
 
 
 handles.output = hObject;
 guidata(hObject, handles);
+
+set(gcf,'Pointer','fullcross');
 
 % Event Listener: on mouse hover eventi ekleniyor
 set(panel , 'WindowButtonMotionFcn' , @coordinate_callback)
@@ -78,6 +82,8 @@ circle = selRobot.circleID;
     
         if left > pLeft && left < pLeft + pWidth && bottom > pBottom && bottom < pBottom + pHeight
         
+        
+            
         posCurr = get(gca , 'CurrentPoint');
         
         X = posCurr(1);
@@ -95,35 +101,33 @@ circle = selRobot.circleID;
 %         avail = isAvailOnPanel(X,Y);
         if roboID ~= 0 && circle == 0 && roboID ~= selRobot.robotID 
            
+            set(gcf,'Pointer','hand');
+            
             tmp = getRobotObj;
             s = tmp(roboID);
             
             selRobot.robotID = roboID;
             selRobot.circleID = circles(s.x, s.y , pref.circleRadius ,'facecolor' , 'none','edgecolor',[1 0 0],'linewidth',4);
-            
-            
+
             setSelectedRobot(selRobot);
             
         
         else
             
             if circle ~= 0 && roboID ~= selRobot.robotID 
-            delete(circle);
-            selRobot.circleID = 0;
-            selRobot.robotID = 0;
-            setSelectedRobot(selRobot);
-            
-
+                
+                set(gcf,'Pointer','fullcross');
+                
+                delete(circle);
+                selRobot.circleID = 0;
+                selRobot.robotID = 0;
+                setSelectedRobot(selRobot);
+           
             end
         end
         
-        
-        
-
-        set(gcf,'Pointer','fullcross');
-        
-
-                
+    
+               
         else
             set(findobj('Tag' , 'coordinate') , 'String' , '' );
             set(gcf,'Pointer','arrow');
@@ -150,12 +154,26 @@ function ClicktoAdd_callback (src,callbackdata,handles)
         posCurr = get(gca , 'CurrentPoint');
         X = posCurr(1);
         Y = posCurr(3);
-        %      type = choosedialog('Eklenecek Eleman:');
+        
+        roboID = getMeIdByCoordinate(X , Y);
+
+        % Eðer panelde týklanýlan yerde bir robot varsa, bu robot için
+        % lazer range finder datasý oluþturulacak.
+        if roboID ~= 0
+            
+
+            plotLaserRangeFinderForId(roboID);
+
+        else
+
+            hold on
+            addElementToPanel(X , Y , handles);
+            hold off
+        end
+        
     end
     
-    hold on
-    addElementToPanel(X , Y , handles);
-    hold off
+
   
 function addElementToPanel(X ,Y ,handles)
     
@@ -244,15 +262,92 @@ for i=1:length(tmp)
     
 end
 
+function deleteRobot(id)
+
+tmp = getRobotObj;
+s = tmp(id);
+
+delete(s.circleObj);
+delete(s.textObj);
+
+function plotLaserRangeFinderForId(roboID)
+% Robotlar alýndý.
+tmp = getRobotObj;
+s = tmp(roboID);
+
+% seçili robot bilgileri alýndý.
+selRobot = getSelectedRobot;
+
+if selRobot.laserCircle ~= 0
+    delete(selRobot.laserCircle);
+end
+    selRobot.laserCircle = circles(s.x, s.y , laserInfo.range,'facecolor' , 'none','edgecolor',[0 0 1],'linewidth',2);
+    setSelectedRobot(selRobot);
 
 
+    % robot silinip tekrar yüklenecek.
+    deleteRobot(s.id);
+    
+    % Daha önceden çizilmiþ lazer çizgileri varsa onlar alandan silinecek.
+    allLines = selRobot.linesObj;
+    
+    for i=1:length(allLines)
+        delete(allLines(i))
+    end
+    allLines = [];
+    
+    % lazer ýþýnlarý çiziliyor.
+    for i=0:laserInfo.interval:360
+        
+        X = s.x;
+        Y = s.y;
+        
+        % çizginin nereye kadar çizileceði. çizilecek uzunluk sensörün
+        % deðerini belirleyecek.
+        limitX = s.x+laserInfo.range * cosd(i);
+        limitY = s.y+laserInfo.range*sind(i);
+        
+        % Lazerlerin yüzeyinden sensör datasý çýkmasý için gerekli
+        % ayarlamalar yapýlýyor.
 
-
-
-
-% avail = isAvail;
+        hold on
+        plotObj = plot([X limitX] , [s.y limitY] );
+        hold off
+        
+        allLines = [allLines plotObj];
+        
+    end
 
     
+    
+     hold on
+    % robot tekrar ekleniyor
+    s.circleObj = circles(X,Y, pref.circleRadius , 'facecolor' , s.color);      % Robot olusturuldu ve adresi nesneye atandi
+    %robot ID'si daire icine yazi olarak ekleniyor.
+    if s.id > 9
+        s.textObj = text(X-0.1,Y,int2str(s.id));           % text adresi robot nesnesine atildi
+    else
+        s.textObj = text(X,Y,int2str(s.id));
+    end
+    
+    set(s.textObj , 'FontSize',12);
+    set(s.textObj , 'FontWeight','bold');
+    hold off
+    
+    % robot silinip tekar yüklendiði için güncelleniyor.
+    tmp(roboID) = s;
+    setRobotObj(tmp);
+    
+    % çizgiler nesneye atanýyor.
+    selRobot.linesObj = allLines;
+     setSelectedRobot(selRobot);   
+    
+    
+    
+    
+
+
+
 % Robotlarin Adreslerini tutan global degisken.
 function setRobotObj(val)
 global robotObj
