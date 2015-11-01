@@ -215,6 +215,8 @@ set(s.textObj , 'FontWeight','bold');
 
 setRobotObj([getRobotObj s]);
     
+% Belirlenen koorinarlarda robot olup olmadýðýný kontrol eder. eðer robot
+% varsa id sini döndürür yoksa 0 döndürür.
 function roboID = getMeIdByCoordinate( X , Y )
 
 % Foksiyon robotlar, cisimler ve hedeflerde böyle bir kordinatýn olup
@@ -236,7 +238,7 @@ for i=1:length(tmp)
     topLimitY  = s.y + pref.circleRadius;
     downLimitY = s.y - pref.circleRadius;
     
-%     fprintf('kontrol edilecek X: %3f Y:%3f \n' , s.x - X , s.y-Y);
+     %fprintf('kontrol edilecek X: %3f Y:%3f \n' , s.x - X , s.y-Y);
     
     if X > s.x
         resX = topLimitX - X;
@@ -270,7 +272,10 @@ s = tmp(id);
 delete(s.circleObj);
 delete(s.textObj);
 
+% Rbot idsi ile belirlenen robot için lazer çizgilerini panelede çizer ve
+% her çizginin adresini array a atar.
 function plotLaserRangeFinderForId(roboID)
+
 % Robotlar alýndý.
 tmp = getRobotObj;
 s = tmp(roboID);
@@ -296,6 +301,11 @@ end
     end
     allLines = [];
     
+    % Lazerin çevresinde bulunan robotlar bulunup array halinde deðiþkene
+    % atanýyor.
+%     foundedRobots = findRobotsForLazer(s.x , s.y );
+    
+    
     % lazer ýþýnlarý çiziliyor.
     for i=0:laserInfo.interval:360
         
@@ -307,18 +317,34 @@ end
         limitX = s.x+laserInfo.range * cosd(i);
         limitY = s.y+laserInfo.range*sind(i);
         
+        % çizilen çizgi doðrultusunda hiç robot var mý ona bakýlýyor.
+        robotNum = isRobotExistForSlope(X , Y , limitX, limitY , i);
+        if robotNum ~= 0
         % Lazerlerin yüzeyinden sensör datasý çýkmasý için gerekli
         % ayarlamalar yapýlýyor.
-
-        hold on
-        plotObj = plot([X limitX] , [s.y limitY] );
-        hold off
+            
+        % gönderilen lazer ýþýný doðrultusunda bir robotun varlýðý
+        % anlaþýldýktan sonra ýþýnýn sahip olduðu uzunluðun
+        % belirlenmesi gerekiyor.
+        % Limit X ve Limit Y deðerleri senkronize edilmeli.
+        
+        
+        
+            hold on
+            plotObj = plot([X limitX] , [s.y limitY] , 'Color' , 'red' );
+            hold off
+            
+        else
+            hold on
+            plotObj = plot([X limitX] , [s.y limitY] , 'Color' , 'blue' );
+            hold off
+        end
         
         allLines = [allLines plotObj];
         
     end
-
     
+
     
      hold on
     % robot tekrar ekleniyor
@@ -344,7 +370,65 @@ end
     
     
     
-    
+% Lazer sensörü aktif olan bir robot için, sensör içerisinde bulunan bütün 
+% robotlarýn idsini dönen foksiyon.    
+function arr = findRobotsForLazer(X , Y )
+% Robotlar alýndý.
+tmp = getRobotObj;
+
+arr = [];
+diffX=0;
+diffY=0;
+
+for i=1:length(tmp)
+
+s = tmp(i);
+
+if s.x >= X
+    diffX = s.x - X;
+end
+
+if s.x < X
+    diffX = X - s.x;
+end
+
+if s.y >= Y
+    diffY = s.y - Y;
+end
+
+if s.y < Y
+    diffY = Y-s.y;
+end
+
+if diffX <= laserInfo.range && diffY <= laserInfo.range && diffX+diffY ~= 0
+arr = [arr s.id];
+end
+
+end
+
+% Lazerden çýkan ýþýnýn doðrultusuna bakarak bu doðrultu üzerinde robot 
+% olup olmadýðýný kontrol eden foksiyon.
+function robot = isRobotExistForSlope(X , Y , limitX, limitY , slope)
+
+robot = 0;
+
+limitI = floor(laserInfo.range / ( pref.circleRadius * 2));
+
+for i=1:limitI
+
+currY = sind(slope) * pref.circleRadius * i * 2 + Y;
+currX = cosd(slope) * pref.circleRadius * i * 2 + X;
+
+roboid = getMeIdByCoordinate(currX , currY );
+
+% circles(currX,currY, 0.1 , 'facecolor' , 'red');
+
+if roboid ~= 0
+    robot = roboid;
+    break;
+end
+
+end
 
 
 
