@@ -41,3 +41,5 @@ Gönderilen her ışının gönderildiği eğim değeri bellidir. dolayısıla a
 
 Program bahsedilen algoritmayla istenilen şekilde çalışmaktadır.
 Örnek çıktı: (Uzaktaki robota çarpan ışınlar kırmızı ile gösterilmiştir.)
+
+![kirmiziIsinlar](./images/redBeams.png)
