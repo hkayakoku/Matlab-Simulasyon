@@ -2,11 +2,12 @@ classdef pref
     properties(Constant)
         
         %% Panel:
-        panelWeight = 35 % Koordinat duzleminde X ekseninin max uzunlugu
-        panelHeight = 22 % Koordinat duzleminde Y ekseninin max uzunlugu
+        panelWeight = 85 % Koordinat duzleminde X ekseninin max uzunlugu
+        panelHeight = 82 % Koordinat duzleminde Y ekseninin max uzunlugu
+        zoomFactor = 3 % Panelde scroll yapýlacak zoom sabiti
         
         %% RobotSekli:
-        circleRadius = 0.5 % Robot icin olusturulacak Þeklin Buyuklugu
+        circleRadius = 2.0 % Robot icin olusturulacak Þeklin Buyuklugu
         
         %% Gruplama:
         groupRadius = 3 % Robotlarin Grup Olusturabilmesini saglayacak kapsama alani

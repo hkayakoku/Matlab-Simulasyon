@@ -52,7 +52,6 @@ select.isControlButtonSet = false;
 select.isMouseDown = false;
 select.allLength = [];
 select.allSlope = [];
-select.figureWindow = 0;
 setSelectedRobot(select);
 
 
@@ -465,21 +464,9 @@ end
     % robot silinip tekrar yüklenecek.
     deleteRobot(s.id);
     
-    
-    % Eðer açýlý bir figure penceresi varsa kapatýlacak.
-    if selRobot.figureWindow ~= 0
-%         fprintf('kaptýlýyor..\n')
-        close(selRobot.figureWindow)
-    end
     % Daha önceden çizilmiþ lazer çizgileri varsa onlar alandan silinecek.
     allLines = selRobot.linesObj;
     
-    % Daha Önceden Atanmýþ lazer uzunluk bilgileri varsa silinecek
-    selRobot.allLength = [];
-    selRobot.allSlope = [];
-
-setSelectedRobot(selRobot);
-
     for i=1:length(allLines)
         delete(allLines(i))
     end
@@ -530,24 +517,15 @@ for i=0:laserInfo.interval:360
         % Eðer bu noktada herhangi bir robotla karþýlaþýlmamýþsa length ve
         % slope deðerleri default olarak array'a atanýyor.
         
-
+        selRobot.allLength = [selRobot.allLength laserInfo.range];
+        selRobot.allSlope = [selRobot.allSlope i];
         
         hold on
         plotObj = plot([X limitX] , [s.y limitY] , 'Color' , 'blue' );
         hold off
     end
     
-    % oluþturulan çizgi bilgisi array'a atýlýyor.
     allLines = [allLines plotObj];
-    
-    
-    arr = [X , Y ; limitX , limitY];
-    distance = pdist(arr , 'euclidean');
-    
-    selRobot.allLength = [selRobot.allLength distance];
-    selRobot.allSlope = [selRobot.allSlope i];
-    
-    
     setSelectedRobot(selRobot);
     
 end
@@ -574,27 +552,14 @@ end
     
     % çizgiler nesneye atanýyor.
     selRobot.linesObj = allLines;
-%      setSelectedRobot(selRobot);   
+     setSelectedRobot(selRobot);   
      
      
-     tmpSel = getSelectedRobot;
-     tmpSel.allLength;
-     tmpSel.allSlope;
-%     
-%      
-%      assignin('base','length',tmpSel.allLength)
-%      assignin('base','slope',tmpSel.allSlope)
-
-     selRobot.figureWindow = figure;
-     plot(tmpSel.allSlope,tmpSel.allLength)
-     title('2-D Line Plot')
-     xlabel('angle')
-     ylabel('length')
-     
-     setSelectedRobot(selRobot); 
-
- 
-     
+%      tmpSel = getSelectedRobot;
+%      tmpSel.allLength
+%      tmpSel.allSlope
+    
+    
 % Lazer sensörü aktif olan bir robot için, sensör içerisinde bulunan bütün 
 % robotlarýn idsini dönen foksiyon.    
 function arr = findRobotsForLazer(X , Y )
@@ -666,7 +631,7 @@ function [ limitX , limitY ] = findLimitBeamDistance(X , Y , angle , robotNum)
 tmp = getRobotObj;
 s = tmp(robotNum);
 
-% selRobot = getSelectedRobot;
+selRobot = getSelectedRobot;
 
 % iki nokta arasýndaki uzaklýk hesaplanýyor.
 arr = [s.x , s.y ; X , Y];
@@ -684,15 +649,11 @@ else
     touchPoint = root(2);
 end
 
-% % elde edilen uzunluk ve açý verisi mevcut robotun arraylarine aktarýlýyor.
-% selRobot.allLength = [selRobot.allLength touchPoint];
-% selRobot.allSlope = [selRobot.allSlope angle];
-% 
-% setSelectedRobot(selRobot);
-% 
-%      tmpSel = getSelectedRobot;
-%      tmpSel.allLength
-%      tmpSel.allSlope
+% elde edilen uzunluk ve açý verisi mevcut robotun arraylarine aktarýlýyor.
+selRobot.allLength = [selRobot.allLength touchPoint];
+selRobot.allSlope = [selRobot.allSlope angle];
+
+setSelectedRobot(selRobot);
 
 
 noktaX = touchPoint*cosd(angle)+X;
