@@ -665,16 +665,32 @@ function [ limitX , limitY ] = findLimitBeamDistance(X , Y , angle , robotNum)
 
 tmp = getRobotObj;
 s = tmp(robotNum);
-
+angle
+% Bölgesi Bulunuyor.
+area = floor(angle/90)+1
 % selRobot = getSelectedRobot;
 
 % iki nokta arasýndaki uzaklýk hesaplanýyor.
-arr = [s.x , s.y ; X , Y];
-distance = pdist(arr , 'euclidean');
+arr = [s.x , s.y ; X , Y]
+distance = pdist(arr , 'euclidean')
 
-alpha = asind( (s.y-Y) / distance);
-diff = angle - alpha;
+alpha = asind( (s.y-Y) / distance)
 
+
+if area == 2
+    angle = mod(angle , 90 )
+    fprintf('diff es')
+    diff = 90 - ( angle + alpha )
+ 
+elseif area == 3
+    angle = mod(angle , 90 )
+    alpha = alpha * -1
+    diff = angle - alpha
+    
+else
+    
+    diff = angle - alpha
+end
 
 root = roots([1 -2*distance*cosd(diff) distance^2-pref.circleRadius^2]);
 % Küçük kök alýnýr.
@@ -694,9 +710,19 @@ end
 %      tmpSel.allLength
 %      tmpSel.allSlope
 
+if area == 3
+    noktaX = -touchPoint*cosd(angle)+X;
+    noktaY = -touchPoint*sind(angle)+Y;
+elseif area == 2
+    
+    noktaX = -touchPoint*cosd(diff + alpha)+X;
+    noktaY = touchPoint*sind(diff + alpha)+Y;
+    
+else
+    noktaX = touchPoint*cosd(angle)+X;
+    noktaY = touchPoint*sind(angle)+Y;
+end
 
-noktaX = touchPoint*cosd(angle)+X;
-noktaY = touchPoint*sind(angle)+Y;
 
 limitX = noktaX;
 limitY = noktaY;
