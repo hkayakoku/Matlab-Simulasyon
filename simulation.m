@@ -582,12 +582,13 @@ end
      tmpSel.allSlope;
 %     
 %      
-%      assignin('base','length',tmpSel.allLength)
+%      assignin('base','length',tmpSel.allLengthm)
 %      assignin('base','slope',tmpSel.allSlope)
 
      selRobot.figureWindow = figure;
      plot(tmpSel.allSlope,tmpSel.allLength)
-     title('2-D Line Plot')
+     nu = num2str(s.id);
+     title(strcat('Laser Range Finder Data For RobotID: ',nu))
      xlabel('angle')
      ylabel('length')
      
@@ -665,31 +666,30 @@ function [ limitX , limitY ] = findLimitBeamDistance(X , Y , angle , robotNum)
 
 tmp = getRobotObj;
 s = tmp(robotNum);
-angle
+
 % Bölgesi Bulunuyor.
-area = floor(angle/90)+1
+area = floor(angle/90)+1;
 % selRobot = getSelectedRobot;
 
 % iki nokta arasýndaki uzaklýk hesaplanýyor.
-arr = [s.x , s.y ; X , Y]
-distance = pdist(arr , 'euclidean')
+arr = [s.x , s.y ; X , Y];
+distance = pdist(arr , 'euclidean');
 
-alpha = asind( (s.y-Y) / distance)
+alpha = asind( (s.y-Y) / distance);
 
 
 if area == 2
-    angle = mod(angle , 90 )
-    fprintf('diff es')
-    diff = 90 - ( angle + alpha )
+    angle = mod(angle , 90 );
+    diff = 90 - ( angle + alpha );
  
 elseif area == 3
-    angle = mod(angle , 90 )
-    alpha = alpha * -1
-    diff = angle - alpha
+    angle = mod(angle , 90 );
+    alpha = alpha * -1;
+    diff = angle - alpha;
     
 else
     
-    diff = angle - alpha
+    diff = angle - alpha;
 end
 
 root = roots([1 -2*distance*cosd(diff) distance^2-pref.circleRadius^2]);
