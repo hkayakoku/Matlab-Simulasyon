@@ -12,10 +12,13 @@ classdef pref
         groupRadius = 3 % Robotlarin Grup Olusturabilmesini saglayacak kapsama alani
         gravLimit = 0.78 % Robotlarin birbirlerine yaklasarak sahip olabilecekleri maksimum cekim degeri
         groupCount = 3  % Grup Basi Robot Sayisi
+        gravDistanceLimit = 3 % Kütle Çekiminin durmasý için gerekli olan mesafe deðeri.
+        
+        
         
         %% Robot
         robotMass = 2 * 1 % her bir robotun ilk baþta sahip olduðu kütlesi
-        robotGroupedMass = -0.85 % robotlar Gruplandýktan sonraki itim kütlesi
+        robotGroupedMass = -1.25 % robotlar Gruplandýktan sonraki itim kütlesi
         robotRadius = 2     % Random ekleme sýrasýnda robot için eklenmesi istenmeyen alan yarýçapý
         %% Cisim
         cisimMass = 2 * -0.12 % her bir cisimin ilk baþta sahip olduðu kütlesi

@@ -207,7 +207,7 @@ if getIsPopupClicked == false
             textObj = findobj('Tag' , 'tipText');
             
             
-            set(textObj, 'Visible' , 'on');
+%             set(textObj, 'Visible' , 'on');
 %             set(textObj, 'Visible' , 'on');
             mainPos = get(gcf , 'CurrentPoint');
             
@@ -216,7 +216,7 @@ if getIsPopupClicked == false
             % a basýlacak deðerler.
             
             % Pozisyon Ayarlandý.
-            set(textObj,  'Position' , [mainPos(1) mainPos(2) 25 9]);
+%             set(textObj,  'Position' , [mainPos(1) mainPos(2) 25 9]);
             
             % Basýlacak Sting Hazýrlanýyor.
 
@@ -327,8 +327,6 @@ clicked = val;
 function r = getIsPopupClicked
 global clicked
 r = clicked;
-
-
 
 function addRobot_Callback(hObject, eventdata, handles)
 hold on;
@@ -694,8 +692,6 @@ end
 
 
 avail = isAvail;
-
-
 
 
 % Eðer Seçilen koordinat elemanlardan herhangi birinin bulunduðu 
@@ -1160,15 +1156,10 @@ if group ~= 0 && ( isFullyGrouped(rObj) == true )% Gruplanmýþsa
         
          X = [fX , fY , fM ; sX , sY , sM ];
                
-        [gravX , gravY] = calculateGravValues(X);
+        [gravX , gravY] = calculateGravValuesWhenGrouped(X);
         
         totalGravX = totalGravX + gravX;
         totalGravY = totalGravY + gravY;
-        
-        
-        
-        
-        
         
         
         
@@ -1257,8 +1248,12 @@ while isActive
     for i = 1:length(getRobotObj)
 
         s = tmp(i);
-
-        if ( s.gravLength < pref.gravLimit ) 
+        limit = pref.gravLimit;
+        len = s.gravLength;
+        if s.isLeader == -1
+            limit = 1.0 ;
+        end
+        if ( len < limit ) 
             
         % Degerler Alindi
         circleInfo  = s.circleObj;
